@@ -1,0 +1,23 @@
+{
+  "name": "curso-graphql",
+  "version": "1.0.0",
+  "description": "Proyecto de practica para curso Graphql",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Graphql",
+    "NodeJS",
+    "MongoDB",
+    "Curso"
+  ],
+  "author": "Alfredo Vazquez",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.18.2",
+    "dotenv": "^8.2.0",
+    "mongoose": "^5.10.10",
+    "uuid": "^8.3.2"
+  }
+}
