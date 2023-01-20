@@ -13,6 +13,11 @@ const BookSchema = new Schema({
     publication: {
         type: String,
     },
+    author: {
+        type: Schema.Types.ObjectId,
+        require: true,
+        ref: 'Authors'
+    },
     editorial: {
         type:String,
         require:true

@@ -1,4 +1,4 @@
-# Configuracion docker-compose para levantar el contenedor mongodb
+# Configuracion docker-compose para levantar el contenedor mongo
   # services:
   #   db_prueba:
   #     image: mongo:5.0.0

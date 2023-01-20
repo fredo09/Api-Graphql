@@ -7,8 +7,12 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: '.env' });
 
-
-mongoose.connect('mongodb://localhost:27017/books-curso',  {
+/**
+ * *
+ *  Conecction a Mongo Databases 
+ * *  
+**/
+mongoose.connect(`${process.env.MONGO_URL}/${process.env.DB_MONGO}`,  {
     useNewUrlParser: true, 
     useUnifiedTopology: true, 
     useFindAndModify: true,
@@ -22,6 +26,11 @@ mongoose.connect('mongodb://localhost:27017/books-curso',  {
 });
 
 
+/**
+ * *
+ * set up Graphql Server
+ * *
+ */
 const serverApollo = () => {
     const apolloServer = new ApolloServer({
         typeDefs,
