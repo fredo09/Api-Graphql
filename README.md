@@ -71,13 +71,13 @@ y ejecutas los siguiente:
 -   npm
 
 ```
-    npm run start
+    npm run dev
 ```
 
 -   yarn
 
 ```
-    yarn start
+    yarn dev
 ```
 
 Esto deberia arrancar el proyecto y estar servido en la siguiente ruta:
