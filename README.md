@@ -82,7 +82,7 @@ y ejecutas los siguiente:
 
 Esto deberia arrancar el proyecto y estar servido en la siguiente ruta:
 
-https:localhost:4000
+http://localhost:4000
 
 ## Configuración contenedor docker
 

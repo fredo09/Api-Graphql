@@ -1,6 +1,6 @@
 # Configuracion docker-compose para levantar el contenedor mongodb
   # services:
-  #   db_prueba:
+  #   db_mongo:
   #     image: mongo:5.0.0
   #     container_name: BookApi_db
   #     ports:
