@@ -51,6 +51,15 @@ const addAsyncUser = async (input) => {
 
 //get Users
 
+const getAsyncUsers =  async () => {
+    
+    const users = await UserSchema.find().sort({createAt: 1});
+
+    console.log(users);
+
+    return users;
+};
+
 //Update User
 
 
@@ -58,5 +67,6 @@ const addAsyncUser = async (input) => {
 
 
 module.exports = {
-    addAsyncUser
+    addAsyncUser,
+    getAsyncUsers
 };

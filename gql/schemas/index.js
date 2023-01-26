@@ -31,6 +31,9 @@ const typeDefs = gql`
     # Query
     type Query {
         sayHelloWord : helloWord
+        
+        # Users
+        getUsers: [User]
     }
 
     # Mutation
