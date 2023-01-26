@@ -4,7 +4,8 @@
   "description": "Proyecto de practica para curso Graphql",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./index.js"
   },
   "keywords": [
     "Graphql",
@@ -15,9 +16,12 @@
   "author": "Alfredo Vazquez",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "^2.18.2",
+    "apollo-server": "^3.11.1",
     "dotenv": "^8.2.0",
     "mongoose": "^5.10.10",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "jsonwebtoken": "^8.5.1",
+    "bcryptjs": "^2.4.3",
+    "graphql": "^16.6.0"
   }
 }
