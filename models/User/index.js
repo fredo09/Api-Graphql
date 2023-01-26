@@ -13,7 +13,7 @@ const userSchema = new Schema({
         require: true,
         unique: true
     },
-    nickmane: {
+    nickname: {
         type: String,
         require: true,
         unique: true

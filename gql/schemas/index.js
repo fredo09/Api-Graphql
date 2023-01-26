@@ -11,11 +11,32 @@ const typeDefs = gql`
         message: String!
     }
 
+    # User
+    type User {
+        id: ID!
+        nickname: String!
+        password: String!
+        email: String!
+        createAt: String
+    }
+
+    #input 
+    input UserInput {
+        nickname: String!
+        password: String!
+        email: String!
+        createAt: String
+    }
 
     # Query
     type Query {
         sayHelloWord : helloWord
     }
+
+    # Mutation
+    type Mutation {
+        addUser(input: UserInput): User
+    } 
 `;
 
 
