@@ -20,12 +20,29 @@ const typeDefs = gql`
         createAt: String
     }
 
+    #Login
+    type LoginResponse {
+        status: Boolean!
+        message: String!
+        token: Token
+    }
+
+    # Token
+    type Token{
+        token: String!
+    }
+
     #input 
     input UserInput {
         nickname: String!
         password: String!
         email: String!
         createAt: String
+    }
+
+    input LoginInput {
+        email: String!
+        password: String!
     }
 
     # Query
@@ -39,6 +56,7 @@ const typeDefs = gql`
     # Mutation
     type Mutation {
         addUser(input: UserInput): User
+        login(input: LoginInput): LoginResponse
     } 
 `;
 

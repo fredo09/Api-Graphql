@@ -2,7 +2,7 @@
 const { testMessage } = require('./../../controllers');
 
 //User controllers
-const { addAsyncUser, getAsyncUsers } = require('./../../controllers/User');
+const { addAsyncUser, getAsyncUsers, asyncLogin } = require('./../../controllers/User');
 
 
 const resolvers = {
@@ -14,6 +14,7 @@ const resolvers = {
     Mutation: {
         //addUser
         addUser: (_, { input }) => addAsyncUser(input),
+        login: (_, {input}) => asyncLogin(input)
     }
 }
 
