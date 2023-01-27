@@ -111,6 +111,11 @@ const getAsyncUsers =  async () => {
 };
 
 //Update User
+const updateAsyncUser = async (input) => {
+    console.log("conectando update user");
+
+    return null;
+};
 
 
 //Delete User
@@ -120,5 +125,6 @@ module.exports = {
     addAsyncUser,
     getAsyncUsers,
     getAsyncUser,
+    updateAsyncUser,
     asyncLogin
 };

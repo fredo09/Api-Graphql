@@ -34,6 +34,12 @@ const typeDefs = gql`
         user:  User
     }
 
+    #UpdateResponseUser
+    type UpdateUserResponse {
+        status: Boolean!
+        message: String!
+    }
+
     # Token
     type Token{
         token: String!
@@ -45,6 +51,14 @@ const typeDefs = gql`
         password: String!
         email: String!
         createAt: String
+    }
+
+    # input para update User
+    input UpdateUserInput {
+        nickname: String
+        email: String
+        currentPassword: String
+        password: String
     }
 
     input LoginInput {
@@ -64,6 +78,7 @@ const typeDefs = gql`
     # Mutation
     type Mutation {
         addUser(input: UserInput): User
+        updateUser(input: UpdateUserInput ): UpdateUserResponse
         login(input: LoginInput): LoginResponse
     } 
 `;
