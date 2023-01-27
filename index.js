@@ -8,7 +8,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: '.env' }) ;
 
 
-mongoose.connect('mongodb://localhost:27017/tweets-graphql',{
+mongoose.connect(`${process.env.MONGO_URL}/${process.env.DB_MONGO}`,{
     useNewUrlParser: true, 
     useUnifiedTopology: true, 
     useFindAndModify: true,

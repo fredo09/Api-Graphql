@@ -1,8 +1,17 @@
 
 const UserSchema = require('./../../models/User');
-
 const bcryptjs = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+const { createToken } = require('./../../utils');
+
+//Obtenemos variables de entorno
+// dotenv.config({ path: '.env' }) ;
+
+/**
+ * Asignacion de variables de entorno
+ */
+const SEED_TOKEN  = process.env.SEED_TOKEN;
+const CADUCIDAD_TOKEN = process.env.CADUCIDAD_TOKEN;
 
 /**
 *   Agregasmo usuarios    
@@ -47,7 +56,6 @@ const addAsyncUser = async (input) => {
 //login
 
 const asyncLogin =  async (input)  => {
-    console.log(input);
 
     const {email, password } = input
 
@@ -59,38 +67,16 @@ const asyncLogin =  async (input)  => {
     const passwordSuccess = await bcryptjs.compare(password, foundUser.password );
     if (!passwordSuccess) throw new Error('Email o contraseña incorrecta');
 
+    console.log(SEED_TOKEN)
     //crear token
+    const token = await createToken(foundUser, SEED_TOKEN, {expiresIn: CADUCIDAD_TOKEN } )
 
-    const token = await createToken(foundUser, 'Semilla-de-Desarrollo', {expiresIn: '48h'} )
-
-
-    console.log('token' , token);
     return {
         status: true,
         message: 'Usuario Logeado!',
         token
     };
 };
-
-
-/**
- * vSEED=Semilla-de-Desarrollo
-CADUCIDAD_TOKEN='48h'
- */
-const createToken = (user, seed , expiresIn ) => {
-    console.log(user)
-    const { _id, nickname, email  } =  user;
-
-    const payload = {
-        id: _id,
-        nickname,
-        email
-    };
-
-    return {
-        token : jwt.sign(payload, seed, expiresIn)
-    }
-}
 
 //Search user by id or nickname
 
