@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const { createToken } = require('./../../utils');
 
 //Obtenemos variables de entorno
-// dotenv.config({ path: '.env' }) ;
+dotenv.config({ path: '.env' }) ;
 
 /**
  * Asignacion de variables de entorno
@@ -67,9 +67,8 @@ const asyncLogin =  async (input)  => {
     const passwordSuccess = await bcryptjs.compare(password, foundUser.password );
     if (!passwordSuccess) throw new Error('Email o contraseña incorrecta');
 
-    console.log(SEED_TOKEN)
     //crear token
-    const token = await createToken(foundUser, SEED_TOKEN, {expiresIn: CADUCIDAD_TOKEN } )
+    const token = await createToken(foundUser, SEED_TOKEN, {expiresIn: CADUCIDAD_TOKEN } );
 
     return {
         status: true,
@@ -78,7 +77,28 @@ const asyncLogin =  async (input)  => {
     };
 };
 
-//Search user by id or nickname
+//Get user by id or nickname
+const getAsyncUser = async (id, nickname) => {
+
+    let user = null;
+
+    if (id) user = await UserSchema.findById({_id: id});
+    if (nickname) user = await UserSchema.findOne({nickname});     
+
+    if (!user) {
+        return {
+            status: false,
+            message: 'Usuario no encontrado',
+            user : null
+        }
+    }
+
+    return {
+        status: true,
+        message: 'Usuario encontrado',
+        user
+    }
+};
 
 //get Users
 const getAsyncUsers =  async () => {
@@ -99,5 +119,6 @@ const getAsyncUsers =  async () => {
 module.exports = {
     addAsyncUser,
     getAsyncUsers,
+    getAsyncUser,
     asyncLogin
 };

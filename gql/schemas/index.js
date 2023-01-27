@@ -27,6 +27,13 @@ const typeDefs = gql`
         token: Token
     }
 
+    #GetUser Response
+    type getUserResponse {
+        status: Boolean!
+        message: String!
+        user:  User
+    }
+
     # Token
     type Token{
         token: String!
@@ -51,6 +58,7 @@ const typeDefs = gql`
         
         # Users
         getUsers: [User]
+        getUser(id:ID, nickname: String): getUserResponse
     }
 
     # Mutation
