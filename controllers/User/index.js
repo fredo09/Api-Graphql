@@ -2,7 +2,8 @@
 const UserSchema = require('./../../models/User');
 const bcryptjs = require('bcryptjs');
 const dotenv = require('dotenv');
-const { createToken } = require('./../../utils');
+const { createToken, hashAsyncPassword } = require('./../../utils');
+
 
 //Obtenemos variables de entorno
 dotenv.config({ path: '.env' }) ;
@@ -14,7 +15,7 @@ const SEED_TOKEN  = process.env.SEED_TOKEN;
 const CADUCIDAD_TOKEN = process.env.CADUCIDAD_TOKEN;
 
 /**
-*   Agregasmo usuarios    
+*   add users    
 **/
 const addAsyncUser = async (input) => {
     console.log("entrada", input);
@@ -31,9 +32,7 @@ const addAsyncUser = async (input) => {
     if (foundUser.length > 0) throw new Error("Nickname ya registrado");
 
 
-    //Encriptar password
-    const salt = await bcryptjs.genSaltSync(10);
-    let newPassword = await bcryptjs.hash(password, salt);
+   let newPassword = hashAsyncPassword(password, 10);
 
     try { 
         //Guardamos usuario
@@ -54,7 +53,6 @@ const addAsyncUser = async (input) => {
 };
 
 //login
-
 const asyncLogin =  async (input)  => {
 
     const {email, password } = input
@@ -111,14 +109,34 @@ const getAsyncUsers =  async () => {
 };
 
 //Update User
-const updateAsyncUser = async (input) => {
+const updateAsyncUser = async (input, {user: {id}}) => {
     console.log("conectando update user");
+    console.log(input);
 
-    return null;
+    console.log("Mi id" , id);
+
+    const { currentPassoword, newPassword } = input;
+    try {
+        if (currentPassoword && newPassword) {
+
+            //Buscamos contraseña del usuario
+            const currentUser = await UserSchema.findById(id);
+
+            console.log(currentUser);
+        } else {
+           let comfirm =  await UserSchema.findByIdAndUpdate(id, input);
+
+           console.log(comfirm);
+        }
+        return {
+            status: true,
+            message: "Usuario actualizado"
+        };
+    } catch(err) {
+        console.log(err);
+    }
 };
 
-
-//Delete User
 
 
 module.exports = {

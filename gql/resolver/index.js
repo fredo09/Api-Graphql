@@ -17,7 +17,7 @@ const resolvers = {
     Mutation: {
         //addUser
         addUser: (_, { input }) => addAsyncUser(input),
-        updateUser: (_, {input}) => updateAsyncUser(input),
+        updateUser: (_, {input}, ctx) => updateAsyncUser(input, ctx),
         login: (_, {input}) => asyncLogin(input)
     }
 }
