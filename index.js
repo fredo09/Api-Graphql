@@ -26,7 +26,7 @@ const serverApollo = () => {
     const server = new ApolloServer({
         typeDefs,
         resolvers,
-        //TO DO: autentificacion  
+        //TODO: autentificacion  
         context: ({req}) => {
             const token = req.headers.authorization;
   

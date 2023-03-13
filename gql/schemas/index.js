@@ -11,33 +11,82 @@ const typeDefs = gql`
         message: String!
     }
 
+     """
+        ENUM
+    """
+    enum StatusUser {
+        ACTIVO
+        INACTIVO
+    }
+
+
+    """
+        Interfaces
+    """
+
+    interface StatusResponse {
+        code: Int!
+        message: String!
+        error: String
+        status: Boolean!
+    }
+
+    """
+        Types
+    """
+
     # User
     type User {
         id: ID!
         nickname: String!
         password: String!
         email: String!
+        status: StatusUser
         createAt: String
     }
 
     #Login
-    type LoginResponse {
-        status: Boolean!
+    type LoginResponse implements StatusResponse{
+        code: Int!
         message: String!
+        status: Boolean!
+        error: String
         token: Token
     }
 
-    #GetUser Response
-    type getUserResponse {
-        status: Boolean!
+    #AddUser Response 
+    type AddUserResponse implements StatusResponse {
+        code: Int!
         message: String!
+        status: Boolean!
+        error: String
+        user: User
+    }
+
+    #GetUser Response
+    type getUserResponse implements StatusResponse {
+        code: Int!
+        message: String!
+        status: Boolean!
+        error: String
         user:  User
     }
 
-    #UpdateResponseUser
-    type UpdateUserResponse {
-        status: Boolean!
+    #GetUsers Response
+    type getUsersResponse implements StatusResponse {
+        code: Int!
         message: String!
+        status: Boolean!
+        error: String
+        users: [User]
+    }
+
+    #UpdateResponseUser
+    type UpdateUserResponse implements StatusResponse{
+        code: Int!
+        message: String!
+        status: Boolean!
+        error: String
     }
 
     # Token
@@ -45,12 +94,16 @@ const typeDefs = gql`
         token: String!
     }
 
+    """
+        Inputs
+    """
+
     #input 
     input UserInput {
         nickname: String!
         password: String!
         email: String!
-        createAt: String
+        status: String
     }
 
     # input para update User
@@ -66,18 +119,26 @@ const typeDefs = gql`
         password: String!
     }
 
+    """
+        Queries
+    """
+
     # Query
     type Query {
         sayHelloWord : helloWord
         
         # Users
-        getUsers: [User]
+        getUsers: getUsersResponse
         getUser(id:ID, nickname: String): getUserResponse
     }
 
+    """
+        Mutation
+    """
+
     # Mutation
     type Mutation {
-        addUser(input: UserInput): User
+        addUser(input: UserInput): AddUserResponse
         updateUser(input: UpdateUserInput ): UpdateUserResponse
         login(input: LoginInput): LoginResponse
     } 

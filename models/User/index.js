@@ -3,6 +3,7 @@
  */
 
 const mongoose = require('mongoose');
+
 const { Schema } = mongoose;
 
 //Creacion de usuarioSchema
@@ -23,11 +24,17 @@ const userSchema = new Schema({
         require: true,
         trim:true
     },
+    status: {
+        type: String,
+        enum : {
+            values: ["ACTIVO", "INACTIVO"],
+            message: '{VALUE} no es permitido'
+        }
+    },
     createAt: {
         type: Date,
         default: Date.now()
     }
 });
-
 
 module.exports = mongoose.model('Users', userSchema);

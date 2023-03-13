@@ -17,37 +17,57 @@ const CADUCIDAD_TOKEN = process.env.CADUCIDAD_TOKEN;
 /**
 *   add users    
 **/
-const addAsyncUser = async (input) => {
-    console.log("entrada", input);
-    const payloadUser = input;
-    payloadUser.email = payloadUser.email.toLowerCase();
-    payloadUser.nickname = payloadUser.nickname.toLowerCase();
-    
-    const {email, nickname, password } = payloadUser;
+const addAsyncUser = async ({ email, nickname, status }) => {
+
+    email = email.toLowerCase();
+    nickname = nickname.toLowerCase();
+    status = status.toUpperCase();
 
     const foundEmail = await UserSchema.find({email});
-    if (foundEmail.length > 0) throw new Error("Email ya registrado");
-
     const foundUser = await UserSchema.find({nickname});
-    if (foundUser.length > 0) throw new Error("Nickname ya registrado");
 
+    if (foundEmail.length > 0 || foundUser.length > 0) {
+        return {
+            code: 400,
+            message:"Ocurrio un Error",
+            error: "Email O Nickname ya registrado",
+            status: false,
+            user: null
+        }
+    }
 
-   let newPassword = hashAsyncPassword(password, 10);
+    let newPassword = await hashAsyncPassword(password, 10);
 
     try { 
         //Guardamos usuario
         const saveUser = new UserSchema({
             nickname,
             email ,
+            status,
             password: newPassword
         });
-    
-        saveUser.save();
-
-        return saveUser;
+            
+        await saveUser.save();
+        
+        return {
+            code: 201,
+            message: "Usuario resgistrado",
+            status: true,
+            error: null,
+            user: saveUser
+        };
 
     } catch(err) {
         console.log(err);
+        const { message } = err.errors.status;
+        // FIXME: VER EL CODIGO DE ERROR Y MOSTRAR EL MISMO EN REGISTRO DE USUARIOS 
+        return {
+            code: 400,
+            message:"Ocurrio un Error",
+            error: message,
+            status: false,
+            user: null
+        }
     }
 
 };
@@ -77,7 +97,7 @@ const asyncLogin =  async (input)  => {
 
 //Get user by id or nickname
 const getAsyncUser = async (id, nickname) => {
-
+    //FIXME: CHECAR EL OBJECTO DE RESPONSE
     let user = null;
 
     if (id) user = await UserSchema.findById({_id: id});
@@ -100,16 +120,25 @@ const getAsyncUser = async (id, nickname) => {
 
 //get Users
 const getAsyncUsers =  async () => {
-    
+    //FIXME: CHECAR EL OBJECTO DE RESPONSE
     const users = await UserSchema.find().sort({createAt: 1});
 
     console.log(users);
 
-    return users;
+    //FIXME: EXPLORAR POSIBLE ERRORES EN EL MANEJO DE RESPONSE 
+    return {
+        code: 201,
+        message: "Lista de Usuarios",
+        status: true,
+        error: null,
+        users: users
+    };
+
 };
 
 //Update User
 const updateAsyncUser = async (input, {user: {id}}) => {
+    //FIXME: CHECAR EL OBJECTO DE RESPONSE
     console.log("conectando update user");
     console.log(input);
 
