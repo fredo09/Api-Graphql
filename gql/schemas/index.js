@@ -45,6 +45,16 @@ const typeDefs = gql`
         createAt: String
     }
 
+    # Tweet 
+    type Tweet {
+        id: ID!
+        user: User!
+        tweet: String!
+        createAt: String
+    }
+
+    # Likes
+
     #Login
     type LoginResponse implements StatusResponse{
         code: Int!
@@ -89,6 +99,14 @@ const typeDefs = gql`
         error: String
     }
 
+    #Tweet Response
+    type TweetResponse implements StatusResponse {
+        code: Int!
+        message: String!
+        status: Boolean!
+        error: String
+    }
+
     # Token
     type Token{
         token: String!
@@ -119,6 +137,11 @@ const typeDefs = gql`
         password: String!
     }
 
+    # input Tweet
+    input CreateInput {
+        tweet: String!
+    }
+
     """
         Queries
     """
@@ -130,6 +153,12 @@ const typeDefs = gql`
         # Users
         getUsers: getUsersResponse
         getUser(id:ID, nickname: String): getUserResponse
+
+        # User Update
+
+
+        # Tweet 
+        helloTweet: helloWord
     }
 
     """
@@ -138,9 +167,13 @@ const typeDefs = gql`
 
     # Mutation
     type Mutation {
+        # User
         addUser(input: UserInput): AddUserResponse
         updateUser(input: UpdateUserInput ): UpdateUserResponse
         login(input: LoginInput): LoginResponse
+
+        # Tweet
+        createTweet(input:CreateInput ): TweetResponse
     } 
 `;
 

@@ -17,7 +17,7 @@ const tweetSchema = new Schema({
         ref: 'Users'
     },
     tweet: {
-        type:String,
+        type: String,
         require: true,
         maxlength: [60, 'Maximo de 60 caracteres']
     },

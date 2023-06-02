@@ -17,8 +17,10 @@ const CADUCIDAD_TOKEN = process.env.CADUCIDAD_TOKEN;
 /**
 *   add users    
 **/
-const addAsyncUser = async ({ email, nickname, status }) => {
+const addAsyncUser = async ({ email, nickname, status, password }) => {
 
+
+    console.log(password);
     email = email.toLowerCase();
     nickname = nickname.toLowerCase();
     status = status.toUpperCase();
@@ -89,6 +91,7 @@ const asyncLogin =  async (input)  => {
     const token = await createToken(foundUser, SEED_TOKEN, {expiresIn: CADUCIDAD_TOKEN } );
 
     return {
+        code: 201,
         status: true,
         message: 'Usuario Logeado!',
         token
